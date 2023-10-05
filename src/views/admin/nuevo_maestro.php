@@ -30,7 +30,7 @@ if (!isset($_SESSION["user_data"])) {
   <section class="h-screen w-1/4 bg-[#353a40] flex flex-col  text-white  items-center justify-between">
     <div class=" flex flex-col w-[90%] justify-center items-center">
       <div class="flex aling-center items-center text-white p-4    justify-around border-b border-white w-[90%]">
-        <div class="bg-[url('/assest/logo.jpg')] bg-cover bg-center rounded-full w-10 h-10">
+        <div class="bg-[url('/src/image/logo.jpg')] bg-cover bg-center rounded-full w-10 h-10">
         </div>
         <h2>Universidad</h2>
       </div>

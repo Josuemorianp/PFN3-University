@@ -5,7 +5,7 @@ if (!isset($_SESSION["user_data"])) {
   echo "<script>alert('" . $denied . "')</script>";
   header("Location: /index.php");
   die();
-} elseif ($_SESSION["user_data"]["id_rol"] !== 1) {
+} elseif ($_SESSION["user_data"]["role_id"] !== "1") {
   $denied = " Acceso invalido";
   echo "<script>alert('" . $denied . "')</script>";
   header("Location: /index.php");
@@ -41,7 +41,7 @@ if (!isset($_SESSION["user_data"])) {
       try {
         $id = $_SESSION["user_data"]['usuario_id'];
 
-        $stmnt = $pdo->prepare('SELECT usuarios.*, roles.role_nombre AS nombre_rol FROM usuarios JOIN roles ON  usuarios.id_rol = id_rol WHERE usuarios.usuario_id =:id ');
+        $stmnt = $pdo->prepare('SELECT usuarios.*, roles.role_nombre AS nombre_rol FROM usuarios JOIN roles ON  usuarios.role_id = id_rol WHERE usuarios.usuario_id =:id ');
         $stmnt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmnt->execute();
 

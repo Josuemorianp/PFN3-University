@@ -12,33 +12,33 @@ if (!isset($_SESSION["user_data"])) {
   die();
 }
 ?>
-<?php
 
+<?php
 if($_SERVER["REQUEST_METHOD"]==="POST"){
-  extract($_POST);
   
-  require_once($_SERVER["DOCUMENT_ROOT"] ."/config/database.php");
+  require_once($_SERVER["DOCUMENT_ROOT"] ."/src/config/database.php");
   
-  $contrasena="maestro";
+  $contrasena="estudiante";
   $hashp=password_hash($contrasena,PASSWORD_DEFAULT);
+  
+  extract($_POST);
 
   try{
-    var_dump($_POST);
-    extract($_POST); 
-  
-    $pdo->beginTransaction();
-    $sqlInsertMaestro="INSERT INTO usuarios (email, contrasena, nombre, fecha_nac, direccion, id_rol) VALUES('$correo','$hashp','$nombre','$fecha','$direccion','$rol_id')";
-    $pdo->query($sqlInsertMaestro); 
-    $maestro_id=$pdo->lastInsertId();
+        
+    $stmt=$pdo->prepare("INSERT INTO usuarios (correo, contrasena, nombre, fecha_nac, direccion, role_id, dni) VALUES (:correo, :hashp, :nombre, :fecha_nacimiento, :direccion, :rol_id, :dni  )");
+    $stmt->bindParam(':correo',$correo,PDO::PARAM_STR);
+    $stmt->bindParam(':hashp',$hashp,PDO::PARAM_STR);
+    $stmt->bindParam(':nombre',$nombre,PDO::PARAM_STR );
+    $stmt->bindParam(':fecha_nacimiento',$fecha_nacimiento,PDO::PARAM_STR );
+    $stmt->bindParam(':direccion', $direccion,PDO::PARAM_STR);
+    $stmt->bindParam(':rol_id',$rol_id,PDO::PARAM_INT);
+    $stmt->bindParam(':dni',$dni, PDO::PARAM_INT);
+    $stmt->execute();
 
-    $sqlInsertarMateria="INSERT INTO maestros_materias (maestro_id, materia_id)   VALUES ('$maestro_id','$materia')";
-    $pdo->query($sqlInsertarMateria);
-    $pdo->commit();
-    header("Location: /src/views/admin/maestros.php");
-  
-  }catch (PDOException $e){
-    $pdo->rollBack();
-    echo" Error: " . $e->getMessage();    
+    header("Location: /src/views/admin/Estudiantes.php");
+
+  }catch(PDOException $e){
+    echo" Error: " . $e->getMessage();
   }
 }
 ?>

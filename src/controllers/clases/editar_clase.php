@@ -1,10 +1,12 @@
 <?php
 session_start();
+
 if (!isset($_SESSION["user_data"])) {
   $denied = " Acceso invalido";
   echo "<script>alert('" . $denied . "')</script>";
   header("Location: /index.php");
   die();
+
 } elseif ($_SESSION["user_data"]["role_id"] !== 1) {
   $denied = " Acceso invalido";
   echo "<script>alert('" . $denied . "')</script>";
@@ -14,18 +16,17 @@ if (!isset($_SESSION["user_data"])) {
 ?>
 
 <?php
+if($_SERVER["REQUEST_METHOD"]==="POST"){
+  
+  extract($_POST);
 
-if($_SERVER["REQUEST_METHOD"]==="GET"){
-
-  extract($_GET);
-
-  require_once($_SERVER["DOCUMENT_ROOT"] ."src/config/database.php");
+  require_once($_SERVER["DOCUMENT_ROOT"] ."/config/database.php");
 
   try{
-    $stmnt=$pdo->query("DELETE FROM almnos_materias WHERE materia_id='$id' ");
-    header("Location: /src/views/alumno/dashboard.php");
-
+    $stmt=$pdo->query("UPDATE materias SET   materia_nombre='$materia_nombre' WHERE materia_id = '$materia_id' ");
+    header("Location: /views/admin/clases.php");
   }catch (PDOException $e){
+    $pdo->rollBack();
     echo" Error: " . $e->getMessage();
   }
 }

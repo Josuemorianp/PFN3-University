@@ -21,11 +21,11 @@
       <h1 class="text-xs text-[Open Sans] text-[#787577] font-medium my-4 ">Bienvenido Ingresa con tu cuenta</h1>
       <form action="/src/models/Login.php" method="post" class>
         <div class="flex flex-row justify-between items-center border-solid border-2 border-[#ececec] rounded-sm w-60 h-8 mb-3">
-          <input class="pl-2 border-0 focus:border-0 outline-transparent" type="email" placeholder="Email" name="email" id="email" autofocus require>
+          <input class="pl-2 border-0 focus:border-0 outline-transparent" type="email" placeholder="Email" name="correo" autofocus require>
           <span class="material-symbols-outlined pr-1">mail</span>
         </div>
         <div class="flex flex-row justify-between items-center border-solid border-2 border-[#ececec] rounded-sm w-60 h-8 mb-3">
-          <input class="pl-2 border-0 focus:border-0 outline-transparent" type="password" placeholder="Password" name="contrasena" id="contrasena" require>
+          <input class="pl-2 border-0 focus:border-0 outline-transparent" type="password" placeholder="Password" name="contrasena" require>
           <span class="material-symbols-outlined pr-1">lock</span>
         </div>
         <div class="flex flex-col justify-end items-end mb-4">

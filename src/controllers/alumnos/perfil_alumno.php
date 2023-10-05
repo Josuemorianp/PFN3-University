@@ -15,17 +15,20 @@ if (!isset($_SESSION["user_data"])) {
 
 <?php
 
-if($_SERVER["REQUEST_METHOD"]==="GET"){
+if($_SERVER["REQUEST_METHOD"]==="POST"){
+  extract($_POST);
 
-  extract($_GET);
+  $hashp=password_hash($contrasena,PASSWORD_DEFAULT);
 
-  require_once($_SERVER["DOCUMENT_ROOT"] ."src/config/database.php");
+  require_once($_SERVER["DOCUMENT_ROOT"] ."/src/config/database.php");
 
-  try{
-    $stmnt=$pdo->query("DELETE FROM almnos_materias WHERE materia_id='$id' ");
+    try{
+    $sqlUpdateUser=("UPDATE usuarios SET  correo='$correo', contrasena='$hashp',nombre='$nombre',fecha_nac='$fecha', direccion='$direccion'WHERE usuario_id = '$user_id' ");
+    $pdo->query($sqlUpdateUser);
     header("Location: /src/views/alumno/dashboard.php");
 
   }catch (PDOException $e){
-    echo" Error: " . $e->getMessage();
+    echo "Error: " . $e->getMessage();
+    
   }
 }

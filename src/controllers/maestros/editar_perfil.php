@@ -14,49 +14,19 @@ if (!isset($_SESSION["user_data"])) {
 ?>
 
 <?php
-
 if($_SERVER["REQUEST_METHOD"]==="POST"){
-    
   extract($_POST);
+  $hashp=password_hash($contrasena,PASSWORD_DEFAULT);
 
   require_once($_SERVER["DOCUMENT_ROOT"] ."/src/config/database.php");
 
   try{
-    $pdo->beginTransaction();
-    $sqlUpdateUser=("UPDATE usuarios SET  correo='$correo', nombre='$nombre',fecha_nac='$fecha_nacimiento', direccion='$direccion', role_id='$rol_id' WHERE usuario_id = '$usuario_id' ");
-
+    $sqlUpdateUser=("UPDATE usuarios SET  correo='$correo', contrasena='$hashp', nombre='$nombre',fecha_nac='$fecha', direccion='$direccion'WHERE usuario_id = '$user_id' ");
     $pdo->query($sqlUpdateUser);
-
-    $sqlUpateMateria=("UPDATE maestros_materias SET materia_id='$materia' WHERE maestro_id ='$usuario_id'");
-    $pdo->query($sqlUpateMateria); 
-    $pdo->commit();
-
-    header("Location: /src/views/admin/maestros.php");
+    header("Location: /src/views/maestro/perfil.php");
 
   }catch (PDOException $e){
-    $pdo->rollBack();
-    echo "Error: " . $e->getMessage();
+    echo" Error: " . $e->getMessage(); 
   }
 }
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
 ?>
