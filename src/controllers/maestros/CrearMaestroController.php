@@ -5,7 +5,7 @@ if (!isset($_SESSION["user_data"])) {
   echo "<script>alert('" . $denied . "')</script>";
   header("Location: /index.php");
   die();
-} elseif ($_SESSION["user_data"]["id_rol"] !== 1) {
+} elseif ($_SESSION["user_data"]["role_id"] !== 1) {
   $denied = " Acceso invalido";
   echo "<script>alert('" . $denied . "')</script>";
   header("Location: /index.php");
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   try {
     extract($_POST);
     $pdo->beginTransaction();
-    $sqlInsertMaestro = "INSERT INTO usuarios (email, contrasena, nombre, fecha_nac, direccion, id_rol) VALUES('$email','$hashp','$nombre','$fecha','$direccion','$id_rol')";
+    $sqlInsertMaestro = "INSERT INTO usuarios (correo, contrasena, nombre, fecha_nac, direccion, id_rol) VALUES('$correo','$hashp','$nombre','$fecha','$direccion','$id_rol')";
 
     $pdo->query($sqlInsertMaestro);
     $maestro_id = $pdo->lastInsertId();

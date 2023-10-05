@@ -6,24 +6,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   require_once($_SERVER["DOCUMENT_ROOT"] . "/src/config/database.php");
 
   try {
-    $stmnt = $pdo->query("SELECT * FROM usuarios WHERE email='$email'");
+    $stmnt = $pdo->query("SELECT * FROM usuarios WHERE correo='$correo'");
 
     if($stmnt->rowCount() === 1) {
       $result = $stmnt->fetch(PDO::FETCH_ASSOC);
 
-      if(password_verify($contrasena, $result["contrasena"])){
+      if ($contrasena === $result["contrasena"]){
         session_start();
 
         $_SESSION["user_data"] = $result;
 
         switch($result){
-          case $result["id_rol"] === 1:
+          case $result["role_id"] === "1":
             header("Location: /src/views/admin/dashboard.php");
             break;
-          case $result["id_rol"] === 2:
+          case $result["role_id"] === "2":
             header("Location: /src/views/maestro/dashboard.php");
             break;
-          case $result["id_rol"] === 3:
+          case $result["role_id"] === "3":
             header("Location: /src/views/alumno/dashboard.php");
             break;
           default:
@@ -32,14 +32,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             break;
         }
       } else{
-        // $miss_pass = "Contraseña invalida";
-        // echo "<script>alert('" . $miss_pass . "')</script>";
-        // // header("Location: /index.php");
+        $miss_pass = "Contraseña invalida";
+        echo "<script>alert('" . $miss_pass . "')</script>";
+        echo "<a href='/index.php'>volver</a>";
+        // header("Location: /index.php");
       }
     } else{
       $miss_email = "Correo invalido";
       echo "<script>alert('" . $miss_email . "')</script>";
-      header("Location: /index.php");
+      echo "<a href='/index.php'>volver</a>";
+      // header("Location: /index.php");
     }
   } catch(PDOException $e) {
     echo "Error" . $e->getMessage();

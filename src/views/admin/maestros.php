@@ -5,7 +5,7 @@ if (!isset($_SESSION["user_data"])) {
   echo "<script>alert('" . $denied . "')</script>";
   header("Location: /index.php");
   die();
-} elseif ($_SESSION["user_data"]["id_rol"] !== 1) {
+} elseif ($_SESSION["user_data"]["role_id"] !== 1) {
   $denied = " Acceso invalido";
   echo "<script>alert('" . $denied . "')</script>";
   header("Location: /index.php");
@@ -18,7 +18,13 @@ if (!isset($_SESSION["user_data"])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin_dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link href="/dist/output.css" rel="stylesheet">
+  <title>UNIVERSIDAD</title>
   <link href="/dist/output.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/4baf7d2e5d.js" crossorigin="anonymous"></script>
 </head>
@@ -68,7 +74,7 @@ if (!isset($_SESSION["user_data"])) {
     </div>
     <div class="pb-10">
       <i class="fa-solid fa-right-from-bracket"></i>
-      <button><a href="/handledb/logout.php">Logout</a></button>
+      <button><a href="/src/models/Logout.php">Logout</a></button>
     </div>
   </section>
   <main>
@@ -119,7 +125,7 @@ if (!isset($_SESSION["user_data"])) {
       <?php
         }
       } catch (PDOException $e) {
-          echo " Error: " . $e->getMessage();
+          echo "Error: " . $e->getMessage();
       }
       ?>
 
